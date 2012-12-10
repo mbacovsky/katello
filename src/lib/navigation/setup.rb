@@ -18,7 +18,7 @@ module Navigation
        :name => _("Setup"),
         :url => :sub_level,
         :options => {:class=>'setup top_level', "data-menu"=>"setup"},
-        :items=> [ menu_subnets, menu_domains, menu_architectures ]
+        :items=> [ menu_smart_proxies, menu_subnets, menu_domains, menu_architectures ]
         # TODO: final order of the setup menu items
         #   Setup
         #   Locations
@@ -26,6 +26,7 @@ module Navigation
         #   Subnets
         #   Domains
         #   Hardware Models
+        #   Architectures
       }
       menu
     end
@@ -48,6 +49,7 @@ module Navigation
       }
     end
 
+<<<<<<< HEAD
     def menu_architectures
       {:key => :registered,
        :name => _("Architectures"),
@@ -56,6 +58,17 @@ module Navigation
        :options => {:class=>'setup second_level', "data-menu"=>"subnets"}
       }
     end
+=======
+    def menu_smart_proxies
+      {:key => :registered,
+       :name => _("Smart Proxies"),
+       :url => smart_proxies_path,
+       :if => lambda{true}, #TODO: check permissions
+       :options => {:class=>'setup second_level', "data-menu"=>"smart_proxies"}
+      }
+    end
+
+>>>>>>> Smart proxies draft
 
   end
 end
