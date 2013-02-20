@@ -12,7 +12,7 @@
 
 require 'spec_helper.rb'
 
-describe Api::TemplatesController, :katello => true do
+describe Api::V1::TemplatesController, :katello => true do
   include LoginHelperMethods
   include AuthorizationHelperMethods
 

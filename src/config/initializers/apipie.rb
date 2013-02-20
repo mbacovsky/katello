@@ -5,7 +5,7 @@ Apipie.configure do |config|
   config.copyright = "Copyright © 2012 Red Hat, Inc."
   config.api_base_url = "/api"
   config.api_controllers_matcher = "#{Rails.root}/app/controllers/api/**/*.rb"
-  config.ignored_by_recorder = %w[Api::PulpProxiesController Api::CandlepinProxiesController Api::RootController, Api::RepositoriesController#sync_complete]
+  config.ignored_by_recorder = %w[Api::V1::PulpProxiesController Api::V1::CandlepinProxiesController Api::V1::RootController, Api::V1::RepositoriesController#sync_complete]
   config.doc_base_url = "/apidoc"
   config.use_cache = Rails.env.production?
   config.validate = false
@@ -22,21 +22,21 @@ Apipie.configure do |config|
   end
 
   if Katello.config.headpin?
-    config.ignored = %w[Api::ChangesetsController
-                        Api::ChangesetsContentController
-                        Api::ErrataController
-                        Api::DistributionsController
-                        Api::GpgKeysController
-                        Api::RepositoriesController
-                        Api::PackagesController
-                        Api::TasksController
-                        Api::TemplatesController
-                        Api::TemplatesContentController
-                        Api::Foreman::ArchitecturesController
-                        Api::Foreman::ConfigTemplates
-                        Api::Foreman::DomainsController
-                        Api::Foreman::SimpleCrudController
-                        Api::Foreman::SubnetsController]
+    config.ignored = %w[Api::V1::ChangesetsController
+                        Api::V1::ChangesetsContentController
+                        Api::V1::ErrataController
+                        Api::V1::DistributionsController
+                        Api::V1::GpgKeysController
+                        Api::V1::RepositoriesController
+                        Api::V1::PackagesController
+                        Api::V1::TasksController
+                        Api::V1::TemplatesController
+                        Api::V1::TemplatesContentController
+                        Api::V1::Foreman::ArchitecturesController
+                        Api::V1::Foreman::ConfigTemplates
+                        Api::V1::Foreman::DomainsController
+                        Api::V1::Foreman::SimpleCrudController
+                        Api::V1::Foreman::SubnetsController]
 
     config.cache_dir = File.join(Rails.root, "public/headpin-apipie-cache")
   end

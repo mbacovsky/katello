@@ -12,7 +12,7 @@
 
 require 'spec_helper'
 
-describe Api::Foreman::SmartProxiesController do
+describe Api::V1::Foreman::SmartProxiesController do
   if Katello.config.use_foreman
     include LoginHelperMethods
     before { login_user_api }

@@ -31,7 +31,7 @@ def should_fail_in_non_library_env method
   end
 end
 
-describe Api::TemplatesContentController do
+describe Api::V1::TemplatesContentController do
   include LoginHelperMethods
   include AuthorizationHelperMethods
 

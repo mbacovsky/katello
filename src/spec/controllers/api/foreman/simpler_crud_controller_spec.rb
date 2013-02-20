@@ -12,7 +12,7 @@
 
 require 'spec_helper'
 
-describe Api::Foreman::SimpleCrudController do
+describe Api::V1::Foreman::SimpleCrudController do
   include LoginHelperMethods
   before { login_user_api }
 

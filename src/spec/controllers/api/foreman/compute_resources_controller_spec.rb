@@ -12,7 +12,7 @@
 
 require 'spec_helper'
 
-describe Api::Foreman::ComputeResourcesController do
+describe Api::V1::Foreman::ComputeResourcesController do
   if Katello.config.use_foreman
     include LoginHelperMethods
 

@@ -12,7 +12,6 @@ module WardenSupport
     end.new
 
 
-
     ApplicationController.instance_eval do
       define_method(:current_organization) do
         Organization.find(org.id)
@@ -35,8 +34,8 @@ module WardenSupport
     warden.expect(:raw_session, Object.new) if expected_methods.include?(:raw_session)
     warden.expect(:logout, true) if expected_methods.include?(:logout)
 
-    Api::ApiController.stub(:require_user, {}) do
-      Api::ApiController.stub(:current_user, user) do
+    Api::V1::ApiController.stub(:require_user, {}) do
+      Api::V1::ApiController.stub(:current_user, user) do
         yield
       end
     end
