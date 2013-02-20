@@ -63,6 +63,12 @@ module Src
       end
     end
 
+    # Setup additional routes by loading all routes file from routes directory
+    config.paths.config.routes.concat Dir[Rails.root.join("config/routes/*.rb")]
+
+    # Setup api routes by loading all routes file from routes/api directory
+    config.paths.config.routes.concat Dir[Rails.root.join("config/routes/api/*.rb")]
+
     # set the relative url for rails and jammit
     ActionController::Base.config.relative_url_root = Katello.config.url_prefix
 
