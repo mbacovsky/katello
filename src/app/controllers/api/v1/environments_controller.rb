@@ -10,7 +10,7 @@
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
-class Api::V1::EnvironmentsController < Api::V1::ApiController
+class Api::V1::EnvironmentsController < Api::ApiController
   resource_description do
     description <<-EOS
       # Description
@@ -135,7 +135,6 @@ class Api::V1::EnvironmentsController < Api::V1::ApiController
   param :id, :identifier, :desc => "environment identifier"
   param :organization_id, :identifier, :desc => "organization identifier"
   def show
-    render :json => @environment
   end
 
   api :POST, "/organizations/:organization_id/environments", "Create an environment in an organization"

@@ -13,7 +13,7 @@
 require 'util/threadsession'
 require 'util/model_util'
 
-class Api::V1::ApiController < ActionController::Base
+class Api::ApiController < ActionController::Base
   include ActionController::HttpAuthentication::Basic
   include Profiling
 
