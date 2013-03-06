@@ -10,7 +10,7 @@
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
-class Api::V1::EnvironmentsController < Api::ApiController
+class Api::V1::EnvironmentsController < Api::V1::ApiController
   resource_description do
     description <<-EOS
       # Description
@@ -92,25 +92,24 @@ class Api::V1::EnvironmentsController < Api::ApiController
   param_group :search_params
   def index
     query_params[:organization_id] = @organization.id
-    environments = KTEnvironment.where query_params
+    @environments = KTEnvironment.where query_params
 
     # The following is a workaround to handle the fact that rhsm currently requests the
     # environment using the 'name' parameter; however, the value is actually the environment label.
-    if environments.empty?
+    if @environments.empty?
       if query_params.has_key?(:name)
         query_params[:label] = query_params[:name]
         query_params.delete(:name)
       end
-      environments = KTEnvironment.where query_params
+      @environments = KTEnvironment.where query_params
     end
 
     unless @organization.readable?
-      environments.delete_if do |env|
+      @environments.delete_if do |env|
         !env.any_operation_readable?
       end
     end
 
-    render :json => (environments).to_json
   end
 
   api :GET, "/owners/:organization_id/environments", "List environments for RHSM"

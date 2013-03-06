@@ -17,9 +17,6 @@ class Api::V1::ApiController < ActionController::Base
   include ActionController::HttpAuthentication::Basic
   include Profiling
 
-  #if @_env['action_dispatch.request.parameters']['controller'] == 1
-  #end
-
   include Api::Version1
 
   respond_to :json
