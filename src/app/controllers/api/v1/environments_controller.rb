@@ -117,16 +117,14 @@ class Api::V1::EnvironmentsController < Api::V1::ApiController
   def rhsm_index
     if query_params.has_key?(:name)
       # retrieve the requested environment
-      all_environments = get_content_view_environments(query_params[:name]).
+      @all_environments = get_content_view_environments(query_params[:name]).
                           collect{|env| {:id => env.cp_id, :name => env.label,
                                          :description => env.content_view.description}}
     else
       # retrieve the list of all environments
-      all_environments = get_content_view_environments.collect{|env| {:id => env.cp_id, :name => env.label,
+      @all_environments = get_content_view_environments.collect{|env| {:id => env.cp_id, :name => env.label,
                                                                       :description => env.content_view.description}}
-
     end
-    render :json => all_environments.flatten
   end
 
   api :GET, "/environments/:id", "Show an environment"
@@ -148,23 +146,18 @@ class Api::V1::EnvironmentsController < Api::V1::ApiController
   def create
     environment_params = params[:environment]
     environment_params[:label] = labelize_params(environment_params)
-    environment = KTEnvironment.new(environment_params)
-    @organization.environments << environment
-    raise ActiveRecord::RecordInvalid.new(environment) unless environment.valid?
+    @environment = KTEnvironment.new(environment_params)
+    @organization.environments << @environment
+    raise ActiveRecord::RecordInvalid.new(@environment) unless @environment.valid?
     @organization.save!
-    render :json => environment
   end
 
   api :PUT, "/environments/:id", "Update an environment"
   api :PUT, "/organizations/:organization_id/environments/:id", "Update an environment in an organization"
   param_group :environment
   def update
-    if @environment.library?
-      raise HttpErrors::BadRequest, _("Can't update the '%s' environment") % "Library"
-    else
-      @environment.update_attributes!(params[:environment])
-      render :json => @environment
-    end
+    raise HttpErrors::BadRequest, _("Can't update the '%s' environment") % "Library" if @environment.library?
+    @environment.update_attributes!(params[:environment])
   end
 
   api :DELETE, "/environments/:id", "Destroy an environment"
@@ -186,7 +179,7 @@ class Api::V1::EnvironmentsController < Api::V1::ApiController
   param :organization_id, :identifier, :desc => "organization identifier"
   param :include_disabled, :bool, :desc => "set to true if you want to see also disabled repositories"
   def repositories
-    render :json => @environment.products.all_readable(@organization).collect { |p| p.repos(@environment, query_params[:include_disabled]) }.flatten
+    @repositories = @environment.products.all_readable(@organization).collect { |p| p.repos(@environment, query_params[:include_disabled]) }.flatten
   end
 
   api :GET, "/environments/:id/releases", "List available releases for given environment"
